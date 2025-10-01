@@ -58,7 +58,7 @@
         time: new Date().toISOString()
       };
       // TODO: Replace with your Zapier webhook URL (we'll set this in Step 2)
-      const WEBHOOK = 'https://hooks.zapier.com/hooks/catch/XXXXX/YYYYY';
+      const WEBHOOK = 'https://hooks.zapier.com/hooks/catch/24821752/u960toz/';
       try {
         await fetch(WEBHOOK, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
         alert('Thanks — we received your request. You will get a PDF risk scan in 24–48 hours.');
