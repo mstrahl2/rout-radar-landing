@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RoutRadar — Free disruption scan</title>
+  <style>
+    body{font-family:Inter,system-ui,Arial;margin:0;background:#f7f9fb;color:#111}
+    .wrap{max-width:980px;margin:40px auto;padding:20px}
+    .card{background:#fff;padding:18px;border-radius:10px;box-shadow:0 8px 30px rgba(12,20,40,0.05)}
+    h1{margin:0 0 8px;font-size:26px}
+    p{margin:0 0 12px;color:#374151}
+    .row{display:flex;gap:8px;margin-bottom:8px}
+    input,select,textarea,button{padding:10px;border-radius:8px;border:1px solid #e6eef8}
+    input,select,textarea{flex:1}
+    button{background:#0b76ef;color:#fff;border:none;cursor:pointer;padding:10px 14px}
+    footer{margin-top:14px;color:#6b7280;font-size:13px}
+    @media(max-width:720px){ .row{flex-direction:column} }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>RoutRadar — Free one-page disruption scan</h1>
+      <p>We’ll run a manual risk scan for one SKU / supplier lane and email you a one-page PDF with top risks, impact estimate, and immediate backups — no integration needed.</p>
+      <form id="leadForm">
+        <div class="row">
+          <input id="name" placeholder="Your name" required />
+          <input id="company" placeholder="Company" required />
+        </div>
+        <div class="row">
+          <input id="email" type="email" placeholder="Email" required />
+          <input id="sku" placeholder="Sample SKU / Supplier / Lane (e.g., Widget A — Shanghai → LA)" />
+        </div>
+        <div class="row">
+          <select id="how">
+            <option>Request: Free disruption scan</option>
+            <option>Book demo</option>
+            <option>Enterprise inquiry</option>
+          </select>
+          <button type="submit">Send my free scan</button>
+        </div>
+        <small>We’ll email a one-page PDF with prioritized risks and suggested mitigations.</small>
+      </form>
+    </div>
+    <footer>© RoutRadar — Simple manual scans today, AI automation later.</footer>
+  </div>
+
+  <script>
+    document.getElementById('leadForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById('name').value,
+        company: document.getElementById('company').value,
+        email: document.getElementById('email').value,
+        sku: document.getElementById('sku').value,
+        how: document.getElementById('how').value,
+        time: new Date().toISOString()
+      };
+      // TODO: Replace with your Zapier webhook URL (we'll set this in Step 2)
+      const WEBHOOK = 'https://hooks.zapier.com/hooks/catch/XXXXX/YYYYY';
+      try {
+        await fetch(WEBHOOK, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+        alert('Thanks — we received your request. You will get a PDF risk scan in 24–48 hours.');
+      } catch(err){
+        console.error(err);
+        alert('Form submitted locally. Replace the WEBHOOK URL with your Zapier webhook to capture leads.');
+      }
+    });
+  </script>
+</body>
+</html>
